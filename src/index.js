@@ -5,16 +5,34 @@
 
  Функция должна возвращать Promise, который должен быть разрешен через указанное количество секунду
 
- Пример:
-   delayPromise(3) // вернет promise, который будет разрешен через 3 секунды
- */
-function delayPromise(seconds) {
-  seconds = 1000;
-return new Promise ( function (resolve) {
-setTimeout (function () {
-resolve();
-}, seconds);
-});
+1.2: Необходимо выбрасывать исключение в случаях:
+  - array не массив или пустой массив (с текстом "empty array")
+  - fn не является функцией (с текстом "fn is not a function")
+
+Зарпещено использовать встроенные методы для работы с массивами
+
+Пример:
+  isAllTrue([1, 2, 3, 4, 5], n => n < 10) // вернет true
+  isAllTrue([100, 2, 3, 4, 5], n => n < 10) // вернет false
+*/
+function isAllTrue(array, fn) {
+    if ( array.length === 0)
+        try {
+            throw new Error ('empty array');
+        } catch (e) {
+            console.log(e.name + ':' + e.message);
+        };
+    if ( typeof  fn !== function() {
+        try {
+            throw new Error ('fn is not function');
+        } catch (e) {
+            console.log(e.name + ':' + e.message);
+        }
+    })
+        if (array.every(fn)) {
+            return true;
+        };
+    return false;
 }
 
 /*
@@ -27,23 +45,108 @@ resolve();
 
  2.2: Элементы полученного массива должны быть отсортированы по имени города
 
- Пример:
-   loadAndSortTowns().then(towns => console.log(towns)) // должна вывести в консоль отсортированный массив городов
- */
-function loadAndSortTowns() {
-  return new Promise(function (resolve, reject) {
-    var xhr = new XMLHttpRequest();
-    xhr.open('GET', 'https://raw.githubusercontent.com/smelukov/citiesTest/master/cities.json');
-    xhr.responseType = 'json';
-    xhr.send();
-    xhr.addEventListener('load', () => {
+Пример:
+  isSomeTrue([1, 2, 30, 4, 5], n => n > 20) // вернет true
+  isSomeTrue([1, 2, 3, 4, 5], n => n > 20) // вернет false
+*/
+function isSomeTrue(array, fn) {
+    if ( array.length === 0)
+        try {
+            throw new Error ('empty array');
+        } catch (e) {
+            console.log(e.name + ':' + e.message);
+        };
+    if (typeof  fn !== function() {
+        try {
+            throw new Error ('fn is not function');
+        } catch (e) {
+            console.log(e.name + ':' + e.message);
+        }
+    })
 
-        resolve(xhr.response.sort(function (a, b) {
-            if (a.name > b.name) {
-                return 1;
+        let isSomeTrue = false;
+
+    for (let item of array) {
+        let isFiltered = fn(item);
+
+        if ( isFiltered) {
+            isSomeTrue = true;
+        }
+    }
+
+    /*
+    Задание 3:
+
+    3.1: Функция принимает заранее неизветсное количество аргументов, первым из которых является функция fn
+    Функция должна поочередно запустить fn для каждого переданного аргумента (кроме самой fn)
+
+    3.2: Функция должна вернуть массив аргументов, для которых fn выбросила исключение
+
+    3.3: Необходимо выбрасывать исключение в случаях:
+      - fn не является функцией (с текстом "fn is not a function")
+    */
+    function returnBadArguments(fn) {
+        let arr = [];
+        if (typeof fn !== 'function') {
+            throw new Error ('fn is not a function');
+        }
+        for ( let i = 1; i < arguments.length; i++) {
+            try {
+                if ( fn (arguments[i])) {
+                    throw new Error();
+                }
+            } catch (e) {
+                arr.push(arguments[i]);
             }
-            if (a.name < b.name) {
-                return -1;
+        }
+        return arr;
+    }
+    /*
+    Задание 4:
+
+    4.1: Функция имеет параметр number (по умолчанию - 0)
+
+    4.2: Функция должна вернуть объект, у которого должно быть несколько методов:
+      - sum - складывает number с переданными аргументами
+      - dif - вычитает из number переданные аргументы
+      - div - делит number на первый аргумент. Результат делится на следующий аргумент (если передан) и так далее
+      - mul - умножает number на первый аргумент. Результат умножается на следующий аргумент (если передан) и так далее
+
+    Количество передаваемых в методы аргументов заранее неизвестно
+
+    4.3: Необходимо выбрасывать исключение в случаях:
+      - number не является числом (с текстом "number is not a number")
+      - какой-либо из аргументов div является нулем (с текстом "division by 0")
+    */
+    function calculator(number = 0) {
+        if (typeof number !== 'number') {
+            throw new Error ('number is not a number');
+        }
+
+        let obj = {
+            sum: function (...rest) {
+                for (let item of rest) {
+                    number += item;
+                }
+                return number;
+            },
+            dif: function (...rest) {
+                for (let item of rest) {
+                    number -= item;
+                }
+                return number;
+            },
+            div: function (...rest) {
+                for (let item of rest) {
+                    number /= item;
+                }
+                return number;
+            },
+            mul: function (...rest) {
+                for (let item of rest) {
+                    number *= item;
+                }
+                return number;
             }
             return 0;
         }));
