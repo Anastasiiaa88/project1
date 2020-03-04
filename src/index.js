@@ -18,7 +18,7 @@
 */
 
 function isAllTrue(array, fn) {
-    if ( !(Array.isArray(array)) || !(array.length) )  {
+    if ( !(Array.isArray(array)) || !(array.length) ) {
         throw new Error('empty array');
     } else if (typeof (fn) !== 'function') {
         throw new Error('fn is not a function');
@@ -119,6 +119,7 @@ function returnBadArguments(fn) {
     */
 function calculator(number) {
 
+    // eslint-disable-next-line no-redeclare
     var number = number || 0;
 
     if (typeof number != 'number') {
@@ -136,7 +137,7 @@ function calculator(number) {
 
         div: function (...args) {
             let division = (pre, cur) => {
-                if ( (pre === 0) || (cur === 0) )  {
+                if ( (pre === 0) || (cur === 0) ) {
                     throw new Error('division by 0');
                 }
 
