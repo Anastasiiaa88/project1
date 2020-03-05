@@ -1,6 +1,7 @@
+const webpack = require('webpack');
 const HtmlPlugin = require('html-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const rules = require('./webpack.config.rules');
 const fs = require('fs');
 const path = require('path');
@@ -58,17 +59,17 @@ module.exports = {
             {
                 test: /\.css$/,
                 use: [
-                    MiniCssExtractPlugin.loader,
+                    ExtractTextPlugin.loader,
                     'css-loader'
                 ]
             }
         ]
     },
     plugins: [
-        new MiniCssExtractPlugin({
-            filename: '[name].css',
-        }),
-        ...html,
+        // new MiniCssExtractPlugin({
+        //     filename: '[name].css',
+        // }),
+        // ...html,
         new CleanWebpackPlugin(['dist'])
     ]
 };
