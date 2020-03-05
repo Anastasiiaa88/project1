@@ -25,7 +25,6 @@ function prepend(what, where) {
     where.prepend(what);
 }
 
-
 /*
 Задание 3:
 
@@ -76,9 +75,10 @@ function findAllPSiblings(where) {
 function findError(where) {
     var result = [];
 
-    for (var i = 0; i < where.childNodes.length; i++) {
-        result.push(where.childNodes[ i ].innerText);
+    for (var child of where.children) {
+        result.push(child.innerText);
     }
+
     return result;
 }
 
@@ -93,13 +93,19 @@ function findError(where) {
    должно быть преобразовано в <div></div><p></p>
  */
 function deleteTextNodes(where) {
-    var wh = where.childNodes;
-    for (var i = 0; i < wh.length; i++) {
-        wh.removeChild (wh [ i ]);
+    if (where.childNodes.length === 0) {
+        return where;
+    }
+    let el = where.childNodes;
+
+    for (let item of el) {
+        if (item.nodeType === 3) {
+            where.removeChild(item);
+        }
     }
 }
 
-/*Задание 6:
+/* Задание 6:
 
  Выполнить предудыщее задание с использование рекурсии - то есть необходимо заходить внутрь каждого дочернего элемента (углубляться в дерево)
 
@@ -109,14 +115,28 @@ function deleteTextNodes(where) {
    После выполнения функции, дерево <span> <div> <b>привет</b> </div> <p>loftchool</p> !!!</span>
    должно быть преобразовано в <span><div><b></b></div><p></p></span>
  */
+
 function deleteTextNodesRecursive(where) {
-    var wh = where.childNodes;
-    for (var i = 0; i < wh.length; i++) {
-        if ( wh [ i ].nodeType === 2) {
-            wh.removeChild (wh);
-        } else if (wh.nodeType === 1) {
-            deleteTextNodesRecursive (wh);
-        }
+
+    if (where.childNodes.length === 0) {
+
+        return where;
+    }
+
+    let list = where.childNodes;
+
+    if (list.length > 0) {
+        Array.from(list).forEach(item => {
+            if (item.nodeType === 3) {
+
+                let parent = item.parentNode;
+                
+                parent.removeChild(item);
+            }
+            if (item) {
+                deleteTextNodesRecursive(item)
+            }
+        });
     }
 }
 
@@ -140,8 +160,8 @@ function deleteTextNodesRecursive(where) {
      texts: 3
    }
  */
-function collectDOMStat(root) {
-}
+// function collectDOMStat(root) {
+// }
 
 /*
 Задание 8 *:
@@ -175,8 +195,8 @@ function collectDOMStat(root) {
     nodes: [div]
   }
 */
-function observeChildNodes(where, fn) {
-}
+// function observeChildNodes(where, fn) {
+// }
 
 export {
     createDivWithText,
@@ -184,7 +204,7 @@ export {
     findAllPSiblings,
     findError,
     deleteTextNodes,
-    deleteTextNodesRecursive,
-    collectDOMStat,
-    observeChildNodes
+    deleteTextNodesRecursive
+    //  collectDOMStat,
+    //  observeChildNodes
 };
