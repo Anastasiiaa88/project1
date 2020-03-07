@@ -84,8 +84,9 @@ function once(target, fn) {
     target.addEventListener ('click', () => {
         if (once) {
             fn();
-            once = false;
+            once = false; 
         }
+        target.removeEventListener('click', (e)=> e);
     })
 }
 
