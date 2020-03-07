@@ -18,19 +18,20 @@
 */
 
 function isAllTrue(array, fn) {
-    if ( !(Array.isArray(array)) || !(array.length) ) {
+    if ( !(array instanceof Array) || !(array.length) ) {
         throw new Error('empty array');
     } else if (typeof (fn) !== 'function') {
         throw new Error('fn is not a function');
     }
 
     for (let i = 0; i < array.length; i++) {
-        if (fn(array[i]) == false ) {
+        if (fn(array[i]) === false ) {
             return false
         }
 
     }
-
+    !(Array.isArray(array))
+    
     return true;
 }
 
@@ -59,7 +60,7 @@ function isSomeTrue(array, fn) {
     }
 
     for (let i = 0; i < array.length; i++) {
-        if ( fn(array[i]) == true ) {
+        if ( fn(array[i]) === true ) {
 
             return true;
         }
@@ -117,10 +118,7 @@ function returnBadArguments(fn) {
       - number не является числом (с текстом "number is not a number")
       - какой-либо из аргументов div является нулем (с текстом "division by 0")
     */
-function calculator(number) {
-
-    // eslint-disable-next-line no-redeclare
-    var number = number || 0;
+function calculator(number=0) {
 
     if (typeof number != 'number') {
         throw new Error('number is not a number');
@@ -142,7 +140,7 @@ function calculator(number) {
                 }
 
                 return pre / cur;
-            }
+            };
 
             return args.reduce(division, number);
         },
@@ -150,9 +148,9 @@ function calculator(number) {
         mul: function (...args) {
             return args.reduce((pre, cur) => pre * cur, number);
         }
-    }
+    };
 
-    return obj
+    return obj;
 
 }
 
