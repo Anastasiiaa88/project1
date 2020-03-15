@@ -8,6 +8,8 @@
  Пример:
    delayPromise(3) // вернет promise, который будет разрешен через 3 секунды
  */
+
+// eslint-disable-next-line no-empty-function,no-unused-vars
 function delayPromise(seconds) {
     return new Promise(function (resolved) {
         setTimeout(resolved, seconds * 1000);
@@ -27,6 +29,7 @@ function delayPromise(seconds) {
  Пример:
    loadAndSortTowns().then(towns => console.log(towns)) // должна вывести в консоль отсортированный массив городов
  */
+// eslint-disable-next-line no-empty-function
 function loadAndSortTowns() {
     return new Promise(function (resolve, reject) {
         fetch('https://raw.githubusercontent.com/smelukov/citiesTest/master/cities.json')

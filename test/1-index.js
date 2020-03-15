@@ -1,5 +1,5 @@
-const { assert } = require('assert')
-import {delayPromise, loadAndSortTowns} from '../loftschool-example/src/index';
+import assert from 'assert';
+import {delayPromise, loadAndSortTowns} from '../src/index';
 
 describe('ДЗ 6.1 - Асинхронность и работа с сетью', () => {
     describe('delayPromise', () => {
