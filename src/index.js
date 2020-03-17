@@ -53,7 +53,7 @@ function isAllTrue(array, fn) {
 */
 
 function isSomeTrue(array, fn) {
-    if (!(Array.isArray(array)) || !(array.length)) {
+    if (!(array instanceof Array) || !(array.length) ) {
         throw new Error('empty array');
     } else if (typeof (fn) !== 'function') {
         throw new Error('fn is not a function');
